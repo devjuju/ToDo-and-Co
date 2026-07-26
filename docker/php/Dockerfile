@@ -22,6 +22,10 @@ RUN apt-get update && apt-get install -y \
 
 RUN a2enmod rewrite
 
+# Configuration PHP pour Symfony 3.1 legacy
+COPY docker/php/conf.d/symfony.ini /usr/local/etc/php/conf.d/symfony.ini
+
+# Symfony 3 utilise le dossier web comme DocumentRoot
 RUN sed -ri -e 's!/var/www/html!/var/www/html/web!g' \
     /etc/apache2/sites-available/*.conf \
     /etc/apache2/apache2.conf \
