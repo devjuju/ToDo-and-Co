@@ -1,61 +1,80 @@
-# 📋 ToDo & Co – Application originale
-
-[![Codacy Badge]](https://app.codacy.com/gh/devjuju/projet8-TodoList/dashboard)
+# 📋 ToDo & Co – Application modernisée
 
 ## 📌 Contexte
 
-Ce dépôt correspond à la version originale de l'application **ToDo & Co** fournie dans le cadre du projet OpenClassrooms.
+Ce dépôt contient la modernisation de l'application **ToDo & Co** réalisée dans le cadre du projet OpenClassrooms.
 
-Son objectif est de conserver un état de référence de l'application avant toute évolution afin de :
+L'objectif est d'améliorer progressivement l'application originale en :
 
-- remettre l'application en fonctionnement dans un environnement moderne grâce à Docker ;
-- vérifier son fonctionnement initial ;
-- réaliser un audit de qualité du code ;
-- réaliser un audit de performance.
+- migrant Symfony vers des versions LTS successives jusqu'à Symfony 7.4 ;
+- corrigeant les anomalies fonctionnelles ;
+- renforçant la sécurité ;
+- ajoutant des tests automatisés ;
+- améliorant la qualité du code ;
+- produisant une documentation technique complète ;
+- réalisant des audits de qualité et de performance avant et après les améliorations.
 
-Les améliorations fonctionnelles, la migration vers Symfony 3.4 LTS, les corrections de sécurité, les tests automatisés ainsi que la documentation finale sont disponibles dans un dépôt distinct consacré à la modernisation du projet.
+Le dépôt d'origine est conservé séparément afin de servir de référence et de permettre la comparaison entre l'état initial et l'état modernisé de l'application.
 
 ---
 
-> **Note :** Ce dépôt n'a pas vocation à évoluer fonctionnellement. Il documente l'état initial de l'application avant les travaux de modernisation réalisés dans un dépôt distinct.
-
----
-
-## Fonctionnalités
+## ✨ Fonctionnalités
 
 L'application permet de :
 
-- créer un compte utilisateur ;
-- se connecter ;
-- créer des tâches ;
+### 📝 Gestion des tâches
+
+- créer une tâche ;
 - modifier une tâche ;
 - marquer une tâche comme faite ou non faite ;
-- supprimer une tâche.
+- supprimer une tâche selon les règles d'autorisation.
 
-Cette version correspond au projet d'origine et ne contient pas les améliorations demandées par le cahier des charges.
+### 👤 Gestion des utilisateurs
+
+- créer un compte utilisateur ;
+- modifier un utilisateur ;
+- attribuer un rôle (`ROLE_USER` ou `ROLE_ADMIN`) lors de la création ou de la modification d'un utilisateur.
+
+### 🔐 Sécurité
+
+- s'authentifier via le système de sécurité Symfony ;
+- rattacher automatiquement une nouvelle tâche à son auteur ;
+- empêcher la modification de l'auteur d'une tâche ;
+- limiter l'accès à la gestion des utilisateurs aux administrateurs ;
+- autoriser uniquement le propriétaire d'une tâche à la supprimer ;
+- réserver la suppression des tâches anonymes aux administrateurs.
+
+### 🧪 Qualité
+
+- couverture par des tests unitaires et fonctionnels ;
+- documentation technique ;
+- audit de qualité du code ;
+- audit de performance.
 
 ---
 
-## Stack technique
+## 🛠️ Stack technique
 
-| Technologie  | Version |
-| ------------ | ------- |
-| Symfony      | 3.1.10  |
-| PHP          | 7.4     |
-| Apache       | 2.4     |
-| MySQL        | 5.7     |
-| Doctrine ORM | 2.6     |
-| Twig         | 1.44    |
-| Docker       | ✔       |
+| Technologie  | Description                            |
+| ------------ | -------------------------------------- |
+| Symfony      | Migration progressive vers Symfony 7.4 |
+| PHP          | Version compatible avec Symfony        |
+| Apache       | Serveur web                            |
+| MySQL        | Base de données                        |
+| Doctrine ORM | Persistance des données                |
+| Twig         | Moteur de templates                    |
+| PHPUnit      | Tests unitaires et fonctionnels        |
+| Docker       | Environnement de développement         |
+| Codacy       | Analyse de la qualité du code          |
 
 ---
 
 ## Installation
 
 ```bash
-git clone https://github.com/devjuju/projet8-TodoList.git
+git clone https://github.com/devjuju/ToDo-and-Co.git
 
-cd projet8-TodoList
+cd ToDo-and-Co
 
 docker compose up -d --build
 
@@ -71,31 +90,47 @@ docker compose exec php php bin/console doctrine:schema:update --force
 - Application :
 
 ```text
-http://localhost:8167
+http://localhost:8267
 ```
 
 - phpMyAdmin :
 
 ```text
-http://localhost:8168
+http://localhost:8268
 ```
 
----
-
-## Documentation
+## 📚 Documentation
 
 La documentation du projet est disponible dans le dossier `docs/`.
 
-Elle comprend notamment :
+Elle couvre l'ensemble des étapes de modernisation de l'application :
 
-- mise en place de Docker ;
-- installation des dépendances ;
-- configuration Symfony ;
-- vérification fonctionnelle ;
-- audit initial de qualité du code ;
-- audit initial de performance.
+### 🐳 Modernisation de l'environnement
 
----
+- 🐳 Mise à jour de l'environnement Docker
+
+### 🚀 Migration du framework
+
+- 🚀 Migration Symfony 3.1 → 3.4 LTS
+- 🚀 Migration Symfony 3.4 → 4.4 LTS
+- 🚀 Migration Symfony 4.4 → 5.4 LTS
+- 🚀 Migration Symfony 5.4 → 6.4 LTS
+- 🚀 Migration Symfony 6.4 → 7.4
+
+### 🛠️ Évolutions fonctionnelles
+
+- 🛢️ Configuration de la base de données
+- 🔐 Authentification Symfony
+- 🔗 Association des tâches à un utilisateur
+- 👥 Gestion des rôles
+- 🔑 Sécurisation des accès
+
+### 🧪 Qualité
+
+- 🧪 Implémentation des tests automatisés
+- 📘 Documentation technique
+- 🏅 Audit final de qualité du code
+- 📈 Audit final de performance
 
 ## Audits réalisés
 
@@ -127,32 +162,35 @@ docs/
 │   ├── 02-composer.md
 │   ├── 03-symfony-configuration.md
 │   └── 04-original-functional-verification.md
+├── modernization/
+│   ├── 01-docker-update.md
+│   ├── 02-symfony-3.4.md
+│   ├── 03-symfony-4.4.md
+│   ├── 04-symfony-5.4.md
+│   ├── 05-symfony-6.4.md
+│   └── 06-symfony-7.4.md
+├── improvements/
 ├── audit/
-│   ├── initial/
-│   └── screenshots/
 └── README.md
 ```
 
 ---
 
-## Dépôt de modernisation
+## 🔙 Dépôt de référence
 
-Ce dépôt représente uniquement l'état initial de l'application et sert de référence pour les audits de qualité et de performance.
+L'application d'origine, utilisée comme base de comparaison, est disponible dans le dépôt :
 
-La modernisation de l'application est réalisée dans un dépôt distinct :
+👉 https://github.com/devjuju/projet8-TodoList
 
-👉 https://github.com/devjuju/ToDo-and-Co
+Ce dépôt contient :
 
-Ce second dépôt documente l'ensemble des évolutions apportées au projet, notamment :
+- la version originale de l'application ;
+- sa conteneurisation avec Docker ;
+- la vérification fonctionnelle ;
+- l'audit initial de qualité du code ;
+- l'audit initial de performance.
 
-- la migration progressive de Symfony 3.1 vers Symfony 7.4 (3.4 LTS → 4.4 LTS → 5.4 LTS → 6.4 LTS → 7.4) ;
-- les corrections fonctionnelles demandées par le cahier des charges ;
-- le renforcement de la sécurité et des contrôles d'accès ;
-- l'implémentation des tests automatisés ;
-- la production de la documentation technique ;
-- les audits finaux de qualité du code et de performance.
-
-Il constitue la version modernisée de l'application et permet de comparer l'état initial du projet avec son état final.
+Il constitue l'état de référence (« avant ») utilisé pour mesurer les améliorations apportées dans ce dépôt.
 
 ---
 
