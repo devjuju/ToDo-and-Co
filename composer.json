@@ -17,25 +17,29 @@
         }
     },
     "require": {
-        "php": ">=7.1.3",
-        "symfony/symfony": "4.4.*",
+        "php": "^7.2.5",
 
-        "doctrine/orm": "^2.7",
-        "doctrine/dbal": "^2.10",
-        "doctrine/doctrine-bundle": "^2.0",
-        "doctrine/doctrine-cache-bundle": "^1.4",
+        "symfony/symfony": "5.4.*",
+
+        "doctrine/orm": "^2.13",
+        "doctrine/dbal": "^2.13",
+        "doctrine/doctrine-bundle": "^2.4",
 
         "symfony/swiftmailer-bundle": "^3.5",
-        "symfony/monolog-bundle": "^3.5",
-        "symfony/polyfill-apcu": "^1.0",
-        "sensio/framework-extra-bundle": "^5.6",
+        "symfony/monolog-bundle": "^3.7",
+        "symfony/polyfill-apcu": "^1.27",
+
+        "sensio/framework-extra-bundle": "^6.2",
 
         "incenteev/composer-parameter-handler": "^2.1",
- 
-        "twig/twig": "^2.12"
+
+        "twig/twig": "^3.0",
+        "symfony/error-handler": "*",
+        "symfony/doctrine-messenger": "5.4.*"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "^4.4"
+        "symfony/phpunit-bridge": "^5.4",
+        "symfony/debug-bundle": "*"
     },
     "scripts": {
         "post-install-cmd": [],
