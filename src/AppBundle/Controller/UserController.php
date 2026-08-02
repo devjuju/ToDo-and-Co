@@ -4,24 +4,20 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
 {
-    /**
-     * @Route("/users", name="user_list")
-     */
+    #[Route('/users', name: 'user_list')]
     public function listAction()
     {
         return $this->render('user/list.html.twig', ['users' => $this->getDoctrine()->getRepository('AppBundle:User')->findAll()]);
     }
 
-    /**
-     * @Route("/users/create", name="user_create")
-     */
+    #[Route('/users/create', name: 'user_create')]
     public function createAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = new User();
@@ -48,9 +44,7 @@ class UserController extends AbstractController
         return $this->render('user/create.html.twig', ['form' => $form->createView()]);
     }
 
-    /**
-     * @Route("/users/{id}/edit", name="user_edit")
-     */
+    #[Route('/users/{id}/edit', name: 'user_edit')]
     public function editAction(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $form = $this->createForm(UserType::class, $user);
