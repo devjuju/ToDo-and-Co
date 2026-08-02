@@ -5,16 +5,14 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 class AppKernel extends Kernel
 {
-    public function registerBundles()
+    public function registerBundles(): iterable
     {
         $bundles = [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
-            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
-            new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
         ];
 
@@ -25,15 +23,18 @@ class AppKernel extends Kernel
         return $bundles;
     }
 
-    public function getProjectDir()
+    public function getProjectDir(): string
     {
         return dirname(__DIR__);
     }
 
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         $loader->load(
-            $this->getProjectDir() . '/app/config/config_' . $this->getEnvironment() . '.yml'
+            $this->getProjectDir() .
+                '/app/config/config_' .
+                $this->getEnvironment() .
+                '.yml'
         );
     }
 }

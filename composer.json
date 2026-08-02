@@ -17,28 +17,25 @@
         }
     },
     "require": {
-        "php": "^7.2.5",
+        "php": "^8.2",
 
-        "symfony/symfony": "5.4.*",
+        "symfony/symfony": "6.4.*",
 
         "doctrine/orm": "^2.13",
         "doctrine/dbal": "^2.13",
         "doctrine/doctrine-bundle": "^2.4",
 
-        "symfony/swiftmailer-bundle": "^3.5",
         "symfony/monolog-bundle": "^3.7",
         "symfony/polyfill-apcu": "^1.27",
-
-        "sensio/framework-extra-bundle": "^6.2",
 
         "incenteev/composer-parameter-handler": "^2.1",
 
         "twig/twig": "^3.0",
-        "symfony/error-handler": "*",
-        "symfony/doctrine-messenger": "5.4.*"
+        "symfony/error-handler": "^6.4",
+        "symfony/doctrine-messenger": "6.4.*"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "^5.4",
+        "symfony/phpunit-bridge": "^6.4",
         "symfony/debug-bundle": "*"
     },
     "scripts": {

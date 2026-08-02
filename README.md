@@ -108,6 +108,7 @@ Elle couvre l'ensemble des étapes de modernisation de l'application :
 ### 🐳 Modernisation de l'environnement
 
 - 🐳 Mise à jour de l'environnement Docker
+- 🛢️ Configuration de la base de données sous Symfony 3.4
 
 ### 🚀 Migration du framework
 
@@ -117,9 +118,19 @@ Elle couvre l'ensemble des étapes de modernisation de l'application :
 - 🚀 Migration Symfony 5.4 → 6.4 LTS
 - 🚀 Migration Symfony 6.4 → 7.4
 
+### ✅ Vérifications fonctionnelles
+
+- ✅ Validation fonctionnelle sous Symfony 6.4
+
+### 🏗️ Modernisation de l'architecture
+
+- 🏗️ Migration de l'architecture Symfony Standard Edition vers une structure Symfony moderne
+- 📦 Remplacement progressif de `AppBundle`
+- 🗂️ Migration vers la structure Symfony Flex (`config/`, `src/`, `templates/`, `public/`)
+- 🔄 Migration des annotations vers les attributs PHP
+
 ### 🛠️ Évolutions fonctionnelles
 
-- 🛢️ Configuration de la base de données
 - 🔐 Authentification Symfony
 - 🔗 Association des tâches à un utilisateur
 - 👥 Gestion des rôles
