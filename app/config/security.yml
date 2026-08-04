@@ -6,23 +6,23 @@ security:
   providers:
     doctrine:
       entity:
-        class: AppBundle:User
+        class: AppBundle\Entity\User
         property: username
 
   firewalls:
-    dev:
-      pattern: ^/(_(profiler|wdt)|css|images|js)/
-      security: false
-
     main:
       lazy: true
       pattern: ^/
+
       form_login:
         login_path: login
-        check_path: login_check
-        always_use_default_target_path: true
-        default_target_path: /
-      logout: ~
+        check_path: /login
+        enable_csrf: true
+        csrf_token_id: authenticate
+
+      logout:
+        path: logout
+        target: /
 
   access_control:
     - { path: ^/login, roles: PUBLIC_ACCESS }
