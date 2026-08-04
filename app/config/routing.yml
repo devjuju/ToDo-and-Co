@@ -1,4 +1,7 @@
 app:
   resource: "@AppBundle/Controller/"
-  type: attribute
+  type: annotation
   prefix: /
+
+logout:
+  path: /logout

@@ -174,23 +174,115 @@ pour les accès anonymes.
 
 ---
 
-## Adaptation de l'entité User
+## Modernisation des contrôleurs
 
-Symfony 6 impose une signature compatible avec `UserInterface`.
+Plusieurs composants historiques ont été remplacés afin d'être compatibles avec Symfony 6.
+
+### Gestion des formulaires
+
+Les formulaires utilisent désormais :
+
+```php
+if ($form->isSubmitted() && $form->isValid())
+```
+
+Cette vérification est obligatoire avant l'appel à `isValid()`.
+
+---
+
+### Hachage des mots de passe
+
+Le service historique :
+
+```php
+UserPasswordEncoderInterface
+```
+
+a été remplacé par :
+
+```php
+UserPasswordHasherInterface
+```
+
+avec :
+
+```php
+$passwordHasher->hashPassword(...)
+```
+
+conformément aux recommandations de Symfony 6.
+
+---
+
+## Adaptation de Doctrine
+
+La migration vers Symfony 6.4 a également nécessité une mise à jour de l'utilisation de Doctrine.
+
+### Suppression des alias d'entités
+
+Les alias historiques utilisés par Doctrine ne sont plus compatibles avec `doctrine/persistence` 3.
+
+Ancien format :
+
+```php
+$this->getDoctrine()->getRepository('AppBundle:User');
+```
+
+Nouveau format :
+
+```php
+$entityManager->getRepository(User::class);
+```
+
+La même modification a été réalisée pour l'entité Task.
+
+---
+
+### Remplacement de getDoctrine()
 
 La méthode :
 
 ```php
-getRoles()
+$this->getDoctrine()
 ```
 
-a été adaptée :
+n'est plus disponible dans les contrôleurs.
+
+Les contrôleurs utilisent désormais l'injection de dépendances avec :
 
 ```php
-public function getRoles(): array
+Doctrine\ORM\EntityManagerInterface
 ```
 
-Une propriété `roles` a été ajoutée :
+Cette évolution est conforme aux bonnes pratiques recommandées par Symfony.
+
+---
+
+## Adaptation de l'entité User
+
+Symfony 6 impose plusieurs évolutions de l'entité utilisateur.
+
+L'entité implémente désormais :
+
+```php
+PasswordAuthenticatedUserInterface
+```
+
+La déclaration devient :
+
+```php
+class User implements UserInterface, PasswordAuthenticatedUserInterface
+```
+
+Une nouvelle méthode a été ajoutée :
+
+```php
+public function getUserIdentifier(): string
+```
+
+afin de remplacer progressivement l'utilisation de `getUsername()`.
+
+Une propriété destinée au stockage des rôles a également été ajoutée :
 
 ```php
 /**
@@ -199,10 +291,34 @@ Une propriété `roles` a été ajoutée :
 private $roles = [];
 ```
 
-Les utilisateurs peuvent désormais conserver leurs rôles :
+La méthode `getRoles()` retourne désormais un tableau et garantit la présence du rôle `ROLE_USER`.
 
-- `ROLE_USER`
-- `ROLE_ADMIN`
+---
+
+## Synchronisation du schéma Doctrine
+
+Après la migration, Doctrine a détecté une différence entre les entités et le schéma de base de données.
+
+La synchronisation a été réalisée avec :
+
+```bash
+php bin/console doctrine:schema:update --force --complete
+```
+
+La commande :
+
+```bash
+php bin/console doctrine:schema:validate
+```
+
+retourne désormais :
+
+```text
+Mapping OK
+Database OK
+```
+
+confirmant que les entités et la base de données sont synchronisées.
 
 ---
 
@@ -236,17 +352,20 @@ Les routes principales sont disponibles :
 
 ## Résultat
 
-La migration Symfony 5.4 → Symfony 6.4 LTS est terminée.
+> une configuration Security compatible Symfony 6.
+
+En effet, l'authentification a été **corrigée pendant la validation fonctionnelle**, pas pendant la migration elle-même.
 
 L'application fonctionne désormais avec :
 
 - Symfony 6.4.43 LTS ;
-- une authentification opérationnelle ;
-- une base Doctrine fonctionnelle ;
-- les routes chargées ;
-- les fonctionnalités historiques conservées.
+- PHP compatible Symfony 6 ;
+- Doctrine compatible avec les nouvelles versions ;
+- une configuration Security compatible Symfony 6 ;
+- un schéma Doctrine synchronisé ;
+- les routes principales chargées.
 
-L'architecture Symfony Standard Edition est volontairement conservée temporairement afin de limiter les risques.
+L'architecture Symfony Standard Edition est volontairement conservée temporairement afin de limiter les risques avant la modernisation de la structure du projet.
 
 ---
 
@@ -266,6 +385,8 @@ La prochaine étape consistera à moderniser la structure Symfony :
 
 La migration Symfony 5.4 vers Symfony 6.4 LTS est terminée.
 
-Cette étape permet au projet ToDo & Co d'utiliser une version Symfony moderne tout en conservant son fonctionnement.
+Cette étape a permis de rendre l'application compatible avec Symfony 6.4 en adaptant le Kernel, Doctrine, Security, les contrôleurs et l'entité `User`.
 
-La prochaine phase sera dédiée à la modernisation complète de l'architecture.
+Une validation fonctionnelle complète a ensuite été réalisée afin de vérifier le bon fonctionnement de l'application. Les résultats de cette phase sont présentés dans le document `05-validation-6.4.md`.
+
+La prochaine étape sera consacrée à la modernisation de l'architecture vers les standards Symfony actuels.
