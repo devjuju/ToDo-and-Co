@@ -19,24 +19,42 @@
     "require": {
         "php": "^8.2",
 
-        "symfony/symfony": "6.4.*",
+        "symfony/framework-bundle": "7.4.*",
+        "symfony/console": "7.4.*",
+        "symfony/security-bundle": "7.4.*",
+        "symfony/twig-bundle": "7.4.*",
+        "symfony/form": "7.4.*",
+        "symfony/validator": "7.4.*",
+        "symfony/translation": "7.4.*",
+        "symfony/yaml": "7.4.*",
+        "symfony/http-foundation": "7.4.*",
+        "symfony/http-kernel": "7.4.*",
+        "symfony/routing": "7.4.*",
+        "symfony/config": "7.4.*",
+        "symfony/cache": "7.4.*",
+        "symfony/expression-language": "7.4.*",
+        "symfony/filesystem": "7.4.*",
+        "symfony/dependency-injection": "7.4.*",
+        "symfony/event-dispatcher": "7.4.*",
+        "symfony/serializer": "7.4.*",
+        "symfony/asset": "7.4.*",
+        "symfony/runtime": "7.4.*",
+        "symfony/monolog-bundle": "^4.0",
 
-        "doctrine/orm": "^2.13",
-        "doctrine/dbal": "^2.13",
-        "doctrine/doctrine-bundle": "^2.4",
+        "doctrine/dbal": "^3.10",
+        "doctrine/doctrine-bundle": "^2.19",
+        "doctrine/orm": "^3.3",
 
-        "symfony/monolog-bundle": "^3.7",
-        "symfony/polyfill-apcu": "^1.27",
-
-        "incenteev/composer-parameter-handler": "^2.1",
 
         "twig/twig": "^3.0",
-        "symfony/error-handler": "^6.4",
-        "symfony/doctrine-messenger": "6.4.*"
+
+        "incenteev/composer-parameter-handler": "^2.1",
+        "symfony/polyfill-apcu": "^1.27"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "^6.4",
-        "symfony/debug-bundle": "*"
+        "symfony/phpunit-bridge": "^7.4",
+        "symfony/debug-bundle": "^7.4",
+        "symfony/web-profiler-bundle": "7.4.*"
     },
     "scripts": {
         "post-install-cmd": [],
@@ -56,6 +74,9 @@
     "config": {
         "audit": {
             "block-insecure": false
+        },
+        "allow-plugins": {
+            "symfony/runtime": true
         }
     }
 }
