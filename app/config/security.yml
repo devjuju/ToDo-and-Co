@@ -1,7 +1,7 @@
 security:
   password_hashers:
     AppBundle\Entity\User:
-      algorithm: bcrypt
+      algorithm: auto
 
   providers:
     doctrine:
@@ -10,13 +10,16 @@ security:
         property: username
 
   firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+
     main:
       lazy: true
       pattern: ^/
-
       form_login:
         login_path: login
-        check_path: /login
+        check_path: login
         enable_csrf: true
         csrf_token_id: authenticate
 
@@ -26,5 +29,5 @@ security:
 
   access_control:
     - { path: ^/login, roles: PUBLIC_ACCESS }
-    - { path: ^/users, roles: PUBLIC_ACCESS }
+    - { path: ^/users, roles: ROLE_ADMIN }
     - { path: ^/, roles: ROLE_USER }
