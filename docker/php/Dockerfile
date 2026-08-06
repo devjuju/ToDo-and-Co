@@ -22,11 +22,11 @@ RUN apt-get update && apt-get install -y \
 
 RUN a2enmod rewrite
 
-# Configuration PHP pour Symfony 3.1 legacy
-COPY docker/php/conf.d/symfony.ini /usr/local/etc/php/conf.d/symfony.ini
+# Configuration PHP application Symfony
+COPY docker/php/conf.d/app.ini /usr/local/etc/php/conf.d/app.ini
 
-# Symfony 3 utilise le dossier web comme DocumentRoot
-RUN sed -ri -e 's!/var/www/html!/var/www/html/web!g' \
+# Symfony Flex utilise le dossier public comme DocumentRoot
+RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' \
     /etc/apache2/sites-available/*.conf \
     /etc/apache2/apache2.conf \
     /etc/apache2/conf-available/*.conf
@@ -34,3 +34,6 @@ RUN sed -ri -e 's!/var/www/html!/var/www/html/web!g' \
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
+
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
