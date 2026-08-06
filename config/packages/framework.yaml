@@ -1,0 +1,10 @@
+framework:
+  property_info:
+    enabled: true
+    with_constructor_extractor: false
+  secret: "%env(APP_SECRET)%"
+  csrf_protection: true
+  http_method_override: true
+  session:
+    handler_id: null
+  default_locale: en

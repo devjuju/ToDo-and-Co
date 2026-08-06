@@ -1,7 +1,0 @@
-app:
-  resource: "@AppBundle/Controller/"
-  type: attribute
-  prefix: /
-
-logout:
-  path: /logout
