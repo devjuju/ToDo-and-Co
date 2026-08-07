@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Task;
+use App\Entity\User;
 
 class TaskController extends AbstractController
 {
@@ -23,16 +24,27 @@ class TaskController extends AbstractController
     #[Route('/tasks/create', name: 'task_create')]
     public function createAction(Request $request, EntityManagerInterface $entityManager)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var User $user */
+            $user = $this->getUser();
+
+            if (!$user) {
+                throw new \LogicException('Aucun utilisateur authentifié.');
+            }
+
+            $task->setUser($user);
+
             $entityManager->persist($task);
             $entityManager->flush();
 
-            $this->addFlash('success', 'La tâche a été bien été ajoutée.');
+            $this->addFlash('success', 'La tâche a bien été ajoutée.');
 
             return $this->redirectToRoute('task_list');
         }
@@ -46,6 +58,8 @@ class TaskController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager
     ) {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
