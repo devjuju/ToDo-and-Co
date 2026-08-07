@@ -1,0 +1,3 @@
+services:
+  Symfony\Bridge\Doctrine\SchemaListener\DoctrineDbalCacheAdapterSchemaListener:
+    autoconfigure: false
