@@ -90,7 +90,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $roles[] = 'ROLE_USER';
         }
 
-        return $roles;
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getRole(): string
+    {
+        if (in_array('ROLE_ADMIN', $this->roles, true)) {
+            return 'ROLE_ADMIN';
+        }
+
+        return 'ROLE_USER';
+    }
+
+    public function setRole(string $role): self
+    {
+        if (!in_array($role, ['ROLE_USER', 'ROLE_ADMIN'], true)) {
+            throw new \InvalidArgumentException('Rôle utilisateur invalide.');
+        }
+
+        $this->roles = [$role];
+
+        return $this;
     }
 
     public function eraseCredentials(): void {}
