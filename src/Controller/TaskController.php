@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Task;
 use App\Entity\User;
+use App\Security\Voter\TaskVoter;
 
 class TaskController extends AbstractController
 {
@@ -58,7 +59,10 @@ class TaskController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager
     ) {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted(
+            TaskVoter::EDIT,
+            $task
+        );
 
         $form = $this->createForm(TaskType::class, $task);
 
@@ -83,6 +87,12 @@ class TaskController extends AbstractController
         Task $task,
         EntityManagerInterface $entityManager
     ) {
+
+        $this->denyAccessUnlessGranted(
+            TaskVoter::TOGGLE,
+            $task
+        );
+
         $task->toggle(!$task->isDone());
         $entityManager->flush();
 
@@ -94,6 +104,8 @@ class TaskController extends AbstractController
     #[Route('/tasks/{id}/delete', name: 'task_delete')]
     public function deleteTaskAction(Task $task, EntityManagerInterface $entityManager)
     {
+        $this->denyAccessUnlessGranted(TaskVoter::DELETE, $task);
+
         $entityManager->remove($task);
         $entityManager->flush();
 
