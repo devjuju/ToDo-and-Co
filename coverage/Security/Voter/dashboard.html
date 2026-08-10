@@ -2,12 +2,12 @@
 <html lang="en">
  <head>
   <meta charset="UTF-8">
-  <title>Dashboard for /var/www/html/src/Entity</title>
+  <title>Dashboard for /var/www/html/src/Security/Voter</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="../_css/bootstrap.min.css?v=11.0.12" rel="stylesheet" type="text/css">
-  <link href="../_css/nv.d3.min.css?v=11.0.12" rel="stylesheet" type="text/css">
-  <link href="../_css/style.css?v=11.0.12" rel="stylesheet" type="text/css">
-  <link href="../_css/custom.css" rel="stylesheet" type="text/css">
+  <link href="../../_css/bootstrap.min.css?v=11.0.12" rel="stylesheet" type="text/css">
+  <link href="../../_css/nv.d3.min.css?v=11.0.12" rel="stylesheet" type="text/css">
+  <link href="../../_css/style.css?v=11.0.12" rel="stylesheet" type="text/css">
+  <link href="../../_css/custom.css" rel="stylesheet" type="text/css">
  </head>
  <body>
   <header>
@@ -16,8 +16,9 @@
      <div class="col-md-12">
       <nav aria-label="breadcrumb">
        <ol class="breadcrumb">
-         <li class="breadcrumb-item"><a href="../index.html">/var/www/html/src</a></li>
-         <li class="breadcrumb-item"><a href="index.html">Entity</a></li>
+         <li class="breadcrumb-item"><a href="../../index.html">/var/www/html/src</a></li>
+         <li class="breadcrumb-item"><a href="../index.html">Security</a></li>
+         <li class="breadcrumb-item"><a href="index.html">Voter</a></li>
          <li class="breadcrumb-item active">(Dashboard)</li>
 
        </ol>
@@ -111,8 +112,7 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="Task.php.html#41"><abbr title="App\Entity\Task::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="User.php.html#40"><abbr title="App\Entity\User::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TaskVoter.php.html#25"><abbr title="App\Security\Voter\TaskVoter::voteOnAttribute">voteOnAttribute</abbr></a></td><td class="text-right">88%</td></tr>
 
        </tbody>
       </table>
@@ -129,6 +129,7 @@
         </tr>
        </thead>
        <tbody>
+       <tr><td><a href="TaskVoter.php.html#25"><abbr title="App\Security\Voter\TaskVoter::voteOnAttribute">voteOnAttribute</abbr></a></td><td class="text-right">6</td></tr>
 
        </tbody>
       </table>
@@ -142,9 +143,9 @@
     </p>
    </footer>
   </div>
-  <script src="../_js/jquery.min.js?v=11.0.12" type="text/javascript"></script>
-  <script src="../_js/d3.min.js?v=11.0.12" type="text/javascript"></script>
-  <script src="../_js/nv.d3.min.js?v=11.0.12" type="text/javascript"></script>
+  <script src="../../_js/jquery.min.js?v=11.0.12" type="text/javascript"></script>
+  <script src="../../_js/d3.min.js?v=11.0.12" type="text/javascript"></script>
+  <script src="../../_js/nv.d3.min.js?v=11.0.12" type="text/javascript"></script>
   <script type="text/javascript">
 $(document).ready(function() {
   nv.addGraph(function() {
@@ -157,7 +158,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#classCoverageDistribution svg')
-      .datum(getCoverageDistributionData([0,0,0,0,0,0,0,0,0,0,2,0], "Class Coverage"))
+      .datum(getCoverageDistributionData([0,0,0,0,0,0,0,0,0,0,1,0], "Class Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -175,7 +176,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#methodCoverageDistribution svg')
-      .datum(getCoverageDistributionData([2,0,0,0,0,0,0,0,0,0,0,28], "Method Coverage"))
+      .datum(getCoverageDistributionData([0,0,0,0,0,0,0,0,0,1,0,1], "Method Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -225,7 +226,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Cyclomatic Complexity');
 
     d3.select('#classComplexity svg')
-      .datum(getComplexityData([[92.85714285714286,12,"<a href=\"Task.php.html#8\">App\\Entity\\Task<\/a>"],[96.96969696969697,24,"<a href=\"User.php.html#12\">App\\Entity\\User<\/a>"]], 'Class Complexity'))
+      .datum(getComplexityData([[92.85714285714286,8,"<a href=\"TaskVoter.php.html#10\">App\\Security\\Voter\\TaskVoter<\/a>"]], 'Class Complexity'))
       .transition()
       .duration(500)
       .call(chart);
@@ -249,7 +250,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Method Complexity');
 
     d3.select('#methodComplexity svg')
-      .datum(getComplexityData([[100,1,"<a href=\"Task.php.html#35\">App\\Entity\\Task::__construct<\/a>"],[0,1,"<a href=\"Task.php.html#41\">App\\Entity\\Task::getId<\/a>"],[100,1,"<a href=\"Task.php.html#46\">App\\Entity\\Task::getCreatedAt<\/a>"],[100,1,"<a href=\"Task.php.html#51\">App\\Entity\\Task::setCreatedAt<\/a>"],[100,1,"<a href=\"Task.php.html#56\">App\\Entity\\Task::getTitle<\/a>"],[100,1,"<a href=\"Task.php.html#61\">App\\Entity\\Task::setTitle<\/a>"],[100,1,"<a href=\"Task.php.html#66\">App\\Entity\\Task::getContent<\/a>"],[100,1,"<a href=\"Task.php.html#71\">App\\Entity\\Task::setContent<\/a>"],[100,1,"<a href=\"Task.php.html#76\">App\\Entity\\Task::isDone<\/a>"],[100,1,"<a href=\"Task.php.html#81\">App\\Entity\\Task::toggle<\/a>"],[100,1,"<a href=\"Task.php.html#86\">App\\Entity\\Task::getUser<\/a>"],[100,1,"<a href=\"Task.php.html#91\">App\\Entity\\Task::setUser<\/a>"],[0,1,"<a href=\"User.php.html#40\">App\\Entity\\User::getId<\/a>"],[100,1,"<a href=\"User.php.html#45\">App\\Entity\\User::getUserIdentifier<\/a>"],[100,1,"<a href=\"User.php.html#50\">App\\Entity\\User::getUsername<\/a>"],[100,1,"<a href=\"User.php.html#55\">App\\Entity\\User::setUsername<\/a>"],[100,1,"<a href=\"User.php.html#60\">App\\Entity\\User::getSalt<\/a>"],[100,1,"<a href=\"User.php.html#65\">App\\Entity\\User::getPassword<\/a>"],[100,1,"<a href=\"User.php.html#70\">App\\Entity\\User::setPassword<\/a>"],[100,1,"<a href=\"User.php.html#75\">App\\Entity\\User::getEmail<\/a>"],[100,1,"<a href=\"User.php.html#80\">App\\Entity\\User::setEmail<\/a>"],[100,2,"<a href=\"User.php.html#85\">App\\Entity\\User::getRoles<\/a>"],[100,1,"<a href=\"User.php.html#96\">App\\Entity\\User::setRoles<\/a>"],[100,2,"<a href=\"User.php.html#103\">App\\Entity\\User::getRole<\/a>"],[100,2,"<a href=\"User.php.html#112\">App\\Entity\\User::setRole<\/a>"],[100,1,"<a href=\"User.php.html#123\">App\\Entity\\User::eraseCredentials<\/a>"],[100,1,"<a href=\"User.php.html#125\">App\\Entity\\User::__construct<\/a>"],[100,1,"<a href=\"User.php.html#130\">App\\Entity\\User::getTasks<\/a>"],[100,2,"<a href=\"User.php.html#136\">App\\Entity\\User::addTask<\/a>"],[100,3,"<a href=\"User.php.html#146\">App\\Entity\\User::removeTask<\/a>"]], 'Method Complexity'))
+      .datum(getComplexityData([[100,2,"<a href=\"TaskVoter.php.html#16\">App\\Security\\Voter\\TaskVoter::supports<\/a>"],[88.88888888888889,6,"<a href=\"TaskVoter.php.html#25\">App\\Security\\Voter\\TaskVoter::voteOnAttribute<\/a>"]], 'Method Complexity'))
       .transition()
       .duration(500)
       .call(chart);
