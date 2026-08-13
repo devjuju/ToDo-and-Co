@@ -1,6 +1,6 @@
 FROM php:8.2-apache
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     unzip \
     zip \
@@ -18,7 +18,8 @@ RUN apt-get update && apt-get install -y \
         pdo_mysql \
         intl \
         zip \
-        gd
+        gd \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN a2enmod rewrite
 
