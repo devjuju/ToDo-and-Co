@@ -8,6 +8,10 @@ use PHPUnit\Framework\TestCase;
 
 class TaskTest extends TestCase
 {
+    /**
+     * Vérifie qu'une nouvelle tâche reçoit automatiquement
+     * une date de création.
+     */
     public function testNewTaskHasCreationDate(): void
     {
         $task = new Task();
@@ -15,6 +19,10 @@ class TaskTest extends TestCase
         self::assertInstanceOf(\DateTimeInterface::class, $task->getCreatedAt());
     }
 
+    /**
+     * Vérifie qu'une nouvelle tâche est créée
+     * avec l'état "non terminée".
+     */
     public function testNewTaskIsNotDone(): void
     {
         $task = new Task();
@@ -22,6 +30,10 @@ class TaskTest extends TestCase
         self::assertFalse($task->isDone());
     }
 
+    /**
+     * Vérifie que le titre d'une tâche peut être défini
+     * puis récupéré correctement.
+     */
     public function testSetTitleAndGetTitle(): void
     {
         $task = new Task();
@@ -31,6 +43,10 @@ class TaskTest extends TestCase
         self::assertSame('Ma tâche', $task->getTitle());
     }
 
+    /**
+     * Vérifie que le contenu d'une tâche peut être défini
+     * puis récupéré correctement.
+     */
     public function testSetContentAndGetContent(): void
     {
         $task = new Task();
@@ -43,6 +59,10 @@ class TaskTest extends TestCase
         );
     }
 
+    /**
+     * Vérifie que la méthode toggle(true)
+     * marque correctement la tâche comme terminée.
+     */
     public function testToggleSetsTaskAsDone(): void
     {
         $task = new Task();
@@ -52,6 +72,10 @@ class TaskTest extends TestCase
         self::assertTrue($task->isDone());
     }
 
+    /**
+     * Vérifie que la méthode toggle(false)
+     * permet de remettre une tâche à l'état non terminée.
+     */
     public function testToggleSetsTaskAsNotDone(): void
     {
         $task = new Task();
@@ -62,6 +86,10 @@ class TaskTest extends TestCase
         self::assertFalse($task->isDone());
     }
 
+    /**
+     * Vérifie que la date de création peut être modifiée
+     * puis récupérée correctement.
+     */
     public function testSetCreatedAtAndGetCreatedAt(): void
     {
         $task = new Task();
@@ -72,6 +100,12 @@ class TaskTest extends TestCase
         self::assertSame($date, $task->getCreatedAt());
     }
 
+    /**
+     * Vérifie qu'une tâche peut être associée à un utilisateur.
+     *
+     * Le test vérifie également que setUser() retourne l'objet Task,
+     * ce qui permet d'utiliser un setter fluent.
+     */
     public function testSetUserAndGetUser(): void
     {
         $task = new Task();
@@ -84,6 +118,14 @@ class TaskTest extends TestCase
         self::assertSame($user, $task->getUser());
     }
 
+    /**
+     * Vérifie qu'une nouvelle entité Task n'est pas automatiquement
+     * associée à un utilisateur lors de son instanciation.
+     *
+     * Le rattachement à l'utilisateur authentifié est effectué
+     * au niveau du processus de création de la tâche,
+     * et non dans le constructeur de l'entité.
+     */
     public function testNewTaskHasNoUser(): void
     {
         $task = new Task();

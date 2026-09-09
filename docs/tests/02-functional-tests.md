@@ -614,15 +614,15 @@ PHPUnit 11.5.56
 Le résultat actuel de l'ensemble de la suite PHPUnit est :
 
 ```text
-55 tests
-116 assertions
+56 tests
+123 assertions
 OK
 ```
 
 Résultat :
 
 ```text
-55 / 55 (100 %)
+56 / 56 (100 %)
 0 échec
 0 erreur
 ```
@@ -650,7 +650,7 @@ Le rapport actuel indique :
 ```text
 Classes: 60.00% (6/10)
 Methods: 86.96% (40/46)
-Lines:   74.02% (151/204)
+Lines:   73.21% (164/224)
 ```
 
 Le critère demandé par le projet est une couverture supérieure à :
@@ -662,7 +662,7 @@ Le critère demandé par le projet est une couverture supérieure à :
 L'objectif est donc désormais atteint :
 
 ```text
-74,02 % > 70 %
+73,21 % > 70 %
 ```
 
 ---
@@ -685,7 +685,7 @@ La couverture actuelle permet notamment de constater que les classes principales
 La couverture des lignes de :
 
 ```text
-74,02 %
+73,21 %
 ```
 
 répond donc à l'objectif fixé par le projet.
@@ -705,7 +705,7 @@ Elle indiquait :
 Après l'ajout des tests fonctionnels, la couverture atteint :
 
 ```text
-74,02 % des lignes
+73,21 % % des lignes
 ```
 
 L'évolution est donc :
@@ -713,13 +713,13 @@ L'évolution est donc :
 ```text
 34,12 %
    ↓
-74,02 %
+73,21 %
 ```
 
 Soit une augmentation de :
 
 ```text
-+39,90 points
++39,09 points
 ```
 
 Cette progression montre l'intérêt des tests fonctionnels pour couvrir les contrôleurs et les différents parcours utilisateurs.
@@ -760,7 +760,7 @@ Le rapport est alors accessible depuis le navigateur à l'adresse correspondant 
 Le rapport HTML actuel affiche une couverture de :
 
 ```text
-74,02 %
+73,21 %
 ```
 
 ---
@@ -869,8 +869,8 @@ Ils permettent donc de détecter des problèmes d'intégration entre plusieurs c
 La suite automatisée présente actuellement :
 
 ```text
-55 tests
-116 assertions
+56 tests
+123 assertions
 0 échec
 0 erreur
 ```
@@ -878,7 +878,7 @@ La suite automatisée présente actuellement :
 La couverture obtenue est :
 
 ```text
-74,02 % des lignes
+73,21 % des lignes
 ```
 
 L'objectif du projet :
@@ -908,34 +908,42 @@ Les tests couvrent désormais les principales fonctionnalités et règles de sé
 
 L'ajout des tests fonctionnels complète les tests unitaires précédemment mis en place.
 
-Les tests unitaires permettent de sécuriser les règles métier isolées tandis que les tests fonctionnels vérifient leur bon fonctionnement à travers les contrôleurs et les requêtes HTTP.
+Les tests unitaires permettent de sécuriser les règles métier isolées, tandis que les tests fonctionnels vérifient leur bon fonctionnement à travers les contrôleurs, les formulaires et les requêtes HTTP.
 
 La suite PHPUnit compte désormais :
 
 ```text
-55 tests
-116 assertions
+56 tests
+123 assertions
 0 échec
 0 erreur
 ```
 
 Tous les tests passent avec succès.
 
-La couverture de code est passée de :
+La couverture de code a progressé au cours de l'implémentation des tests :
 
 ```text
 34,12 %
 ```
 
-après l'implémentation initiale des tests unitaires à :
+après l'implémentation initiale des tests unitaires, puis :
 
 ```text
-74,02 %
+73,21 %
 ```
 
 après l'ajout des tests fonctionnels.
 
-L'objectif fixé par le projet, à savoir une couverture supérieure à :
+Le rapport final indique :
+
+```text
+Classes : 60,00 % (6/10)
+Méthodes : 86,96 % (40/46)
+Lignes : 73,21 % (164/224)
+```
+
+L'objectif fixé par le projet, à savoir une couverture de code supérieure à :
 
 ```text
 70 %
@@ -943,6 +951,18 @@ L'objectif fixé par le projet, à savoir une couverture supérieure à :
 
 est donc atteint.
 
-Le rapport HTML généré avec Xdebug constitue désormais un élément de preuve permettant de documenter ce niveau de couverture.
+Le rapport HTML généré avec Xdebug constitue un élément de preuve permettant de documenter le niveau de couverture obtenu.
+
+Les tests fonctionnels couvrent notamment :
+
+- l'accès aux pages nécessitant une authentification ;
+- l'accès à la liste des tâches ;
+- la création d'une tâche ;
+- l'association automatique d'une tâche à l'utilisateur authentifié ;
+- la modification d'une tâche ;
+- les règles de propriété des tâches ;
+- le changement d'état d'une tâche ;
+- la suppression d'une tâche ;
+- les règles spécifiques aux tâches rattachées à `anonymous`.
 
 Les tests automatisés offrent ainsi une base plus fiable pour poursuivre les évolutions de ToDo & Co et limiter les risques de régression lors des prochaines modifications.

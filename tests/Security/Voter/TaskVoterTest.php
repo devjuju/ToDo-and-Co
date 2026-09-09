@@ -13,6 +13,9 @@ class TaskVoterTest extends TestCase
 {
     /**
      * Vérifie que le propriétaire peut modifier sa tâche.
+     *
+     * Le Voter compare l'utilisateur présent dans le token
+     * avec l'utilisateur propriétaire de la tâche.
      */
     public function testOwnerCanEditTask(): void
     {
@@ -22,6 +25,7 @@ class TaskVoterTest extends TestCase
         $task = new Task();
         $task->setUser($owner);
 
+        // Le token représente l'utilisateur actuellement connecté.
         $token = $this->createToken($owner);
         $voter = new TaskVoter();
 
@@ -32,7 +36,8 @@ class TaskVoterTest extends TestCase
     }
 
     /**
-     * Vérifie qu'un autre utilisateur ne peut pas modifier la tâche.
+     * Vérifie qu'un utilisateur différent du propriétaire
+     * ne peut pas modifier la tâche.
      */
     public function testOtherUserCannotEditTask(): void
     {
@@ -45,6 +50,7 @@ class TaskVoterTest extends TestCase
         $task = new Task();
         $task->setUser($owner);
 
+        // Le token contient un autre utilisateur que le propriétaire.
         $token = $this->createToken($otherUser);
         $voter = new TaskVoter();
 
@@ -55,7 +61,8 @@ class TaskVoterTest extends TestCase
     }
 
     /**
-     * Vérifie que le propriétaire peut changer l'état de sa tâche.
+     * Vérifie que le propriétaire peut changer l'état
+     * de sa propre tâche.
      */
     public function testOwnerCanToggleTask(): void
     {
@@ -75,7 +82,8 @@ class TaskVoterTest extends TestCase
     }
 
     /**
-     * Vérifie qu'un autre utilisateur ne peut pas changer l'état de la tâche.
+     * Vérifie qu'un autre utilisateur ne peut pas changer
+     * l'état d'une tâche qui ne lui appartient pas.
      */
     public function testOtherUserCannotToggleTask(): void
     {
@@ -98,7 +106,7 @@ class TaskVoterTest extends TestCase
     }
 
     /**
-     * Vérifie que le propriétaire peut supprimer sa tâche.
+     * Vérifie que le propriétaire peut supprimer sa propre tâche.
      */
     public function testOwnerCanDeleteTask(): void
     {
@@ -118,7 +126,8 @@ class TaskVoterTest extends TestCase
     }
 
     /**
-     * Vérifie qu'un autre utilisateur ne peut pas supprimer la tâche.
+     * Vérifie qu'un utilisateur ne peut pas supprimer
+     * la tâche d'un autre utilisateur.
      */
     public function testOtherUserCannotDeleteTask(): void
     {
@@ -141,8 +150,10 @@ class TaskVoterTest extends TestCase
     }
 
     /**
-     * Vérifie qu'un utilisateur standard ne peut pas supprimer
-     * une tâche appartenant à l'utilisateur anonymous.
+     * Vérifie la règle métier spécifique aux anciennes tâches.
+     *
+     * Les tâches historiques sont rattachées à l'utilisateur
+     * "anonymous". Un utilisateur standard ne peut pas les supprimer.
      */
     public function testRegularUserCannotDeleteAnonymousTask(): void
     {
@@ -168,7 +179,10 @@ class TaskVoterTest extends TestCase
 
     /**
      * Vérifie qu'un administrateur peut supprimer
-     * une tâche appartenant à l'utilisateur anonymous.
+     * une tâche rattachée à l'utilisateur "anonymous".
+     *
+     * Cette règle permet à l'administrateur de gérer
+     * les anciennes tâches migrées depuis le MVP.
      */
     public function testAdminCanDeleteAnonymousTask(): void
     {
@@ -183,6 +197,7 @@ class TaskVoterTest extends TestCase
         $task = new Task();
         $task->setUser($anonymous);
 
+        // Le token représente ici un administrateur.
         $token = $this->createToken($admin);
         $voter = new TaskVoter();
 
@@ -193,7 +208,10 @@ class TaskVoterTest extends TestCase
     }
 
     /**
-     * Vérifie qu'un utilisateur non authentifié est refusé.
+     * Vérifie qu'un utilisateur non authentifié est toujours refusé.
+     *
+     * Le Voter ne doit jamais accorder une permission
+     * lorsque le token ne contient pas d'utilisateur.
      */
     public function testUnauthenticatedUserIsDenied(): void
     {
@@ -203,6 +221,7 @@ class TaskVoterTest extends TestCase
         $task = new Task();
         $task->setUser($owner);
 
+        // null représente l'absence d'utilisateur authentifié.
         $token = $this->createToken(null);
         $voter = new TaskVoter();
 
@@ -213,8 +232,11 @@ class TaskVoterTest extends TestCase
     }
 
     /**
-     * Vérifie que le Voter ne prend pas en charge un sujet
-     * qui n'est pas une instance de Task.
+     * Vérifie que le Voter ne prend pas en charge
+     * les objets qui ne sont pas des Task.
+     *
+     * ACCESS_ABSTAIN signifie que ce Voter laisse un autre mécanisme
+     * de sécurité décider de l'autorisation.
      */
     public function testUnsupportedSubjectIsAbstained(): void
     {
@@ -231,7 +253,11 @@ class TaskVoterTest extends TestCase
     }
 
     /**
-     * Crée un TokenInterface représentant l'utilisateur connecté.
+     * Crée un faux TokenInterface représentant l'utilisateur connecté.
+     *
+     * Le test unitaire ne démarre pas tout le système d'authentification
+     * Symfony. On simule uniquement le token dont le Voter a besoin
+     * pour déterminer l'utilisateur courant.
      */
     private function createToken(?User $user): TokenInterface
     {

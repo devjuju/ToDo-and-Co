@@ -9,7 +9,7 @@ Il complète l'audit initial réalisé sur l'application originale et permet de 
 Les principales évolutions intervenues entre les deux mesures concernent notamment :
 
 - la migration progressive de Symfony vers Symfony 7.4 LTS ;
-- a modernisation de l'architecture Symfony ;
+- la modernisation de l'architecture Symfony ;
 - la migration vers la structure Symfony Flex ;
 - la mise à jour de PHP ;
 - la sécurisation de l'application ;
@@ -75,7 +75,9 @@ Avant la réalisation des mesures, l'état technique de l'application a été v�
 
 ### Validation de Composer
 
+```bash
 docker compose exec php composer validate
+```
 
 Résultat :
 
@@ -196,7 +198,7 @@ Chaque capture permet de retrouver les informations correspondant aux mesures pr
 | ------------------------- | -----: | ------: | --------------- |
 | Accueil                   |  32 ms |    4 MB | `/`             |
 | Login                     |  27 ms |    2 MB | `/login`        |
-| Liste des tâches          |  52 ms |    4 MB | `/tasks`        |
+| Liste des tâches          |  73 ms |    4 MB | `/tasks`        |
 | Création d'une tâche      |  69 ms |    4 MB | `/tasks/create` |
 | Création d'un utilisateur | 100 ms |    4 MB | `/users/create` |
 
@@ -232,10 +234,10 @@ avec :
 
 de mémoire utilisée.
 
-La liste des tâches atteint :
+La liste des tâches atteint désormais :
 
 ```text
-52 ms
+73 ms
 ```
 
 pour :
@@ -246,7 +248,19 @@ pour :
 
 de mémoire.
 
-La création d'une tâche présente un temps légèrement supérieur :
+Cette mesure est légèrement supérieure à la mesure intermédiaire précédemment relevée à 52 ms. Cette évolution intervient après l'adaptation de l'affichage de la liste des tâches aux règles d'autorisation définies dans `TaskVoter`.
+
+La vue `task/list.html.twig` utilise désormais plusieurs vérifications `is_granted()` afin d'afficher dynamiquement les actions accessibles à l'utilisateur connecté :
+
+- modification d'une tâche ;
+- changement d'état d'une tâche ;
+- suppression d'une tâche.
+
+Ces vérifications permettent d'assurer une cohérence entre les règles de sécurité appliquées côté serveur et les actions proposées dans l'interface utilisateur.
+
+Malgré cette légère augmentation par rapport à la mesure intermédiaire, le temps final de 73 ms reste nettement inférieur aux 212 ms mesurés sur la version originale.
+
+La création d'une tâche présente un temps d'exécution de :
 
 ```text
 69 ms
@@ -284,11 +298,11 @@ Les résultats initiaux étaient :
 | ------------------------- | ----------------: | -------------: |
 | Accueil                   |            149 ms |      **32 ms** |
 | Login                     |            147 ms |      **27 ms** |
-| Liste des tâches          |            212 ms |      **52 ms** |
+| Liste des tâches          |            212 ms |      **73 ms** |
 | Création d'une tâche      |            304 ms |      **69 ms** |
 | Création d'un utilisateur |            264 ms |     **100 ms** |
 
-Les résultats montrent une diminution du temps observé sur chacune des pages comparées.
+Les résultats montrent une diminution du temps observé sur les cinq parcours comparés entre la version originale et la version finale.
 
 ---
 
@@ -298,11 +312,13 @@ Les résultats montrent une diminution du temps observé sur chacune des pages c
 | ------------------------- | ----------------------: |
 | Accueil                   |             **-78,5 %** |
 | Login                     |             **-81,6 %** |
-| Liste des tâches          |             **-75,5 %** |
+| Liste des tâches          |             **-65,6 %** |
 | Création d'une tâche      |             **-77,3 %** |
 | Création d'un utilisateur |             **-62,1 %** |
 
 Ces valeurs doivent cependant être interprétées avec prudence.
+
+La liste des tâches présente une mesure finale de 73 ms, contre 52 ms lors d'une mesure intermédiaire réalisée avant l'adaptation de la vue aux règles d'autorisation du `TaskVoter`. La valeur de 73 ms est la mesure à retenir pour l'état final du projet.
 
 ---
 
@@ -332,7 +348,7 @@ La comparaison doit donc être considérée comme une indication de l'évolution
 
 ## 🔬 Interprétation
 
-Les résultats obtenus permettent néanmoins de constater que la version finale de l'application présente des temps d'exécution inférieurs à ceux relevés sur la version originale dans les mêmes parcours fonctionnels.
+Les résultats obtenus permettent de constater que la version finale de l'application présente des temps d'exécution inférieurs à ceux relevés sur la version originale dans les cinq parcours étudiés.
 
 La page la plus coûteuse reste :
 
@@ -355,6 +371,16 @@ La création d'une tâche :
 ```
 
 reste également sous le seuil des 100 ms observés pour les pages analysées.
+
+La liste des tâches :
+
+```text
+73 ms
+```
+
+présente un temps légèrement supérieur à la mesure intermédiaire de 52 ms, en raison notamment des vérifications d'autorisation ajoutées dans la vue.
+
+Ces contrôles permettent cependant de présenter à l'utilisateur uniquement les actions auxquelles il est autorisé, en cohérence avec les règles définies dans `TaskVoter`.
 
 La consommation mémoire est particulièrement stable :
 
@@ -478,6 +504,10 @@ et :
 Aucun goulet d'étranglement majeur n'a été identifié lors des mesures réalisées.
 
 La comparaison avec l'application originale montre également une diminution importante des temps observés sur les cinq parcours étudiés.
+
+La liste des tâches présente toutefois une mesure finale de 73 ms, supérieure à la mesure intermédiaire de 52 ms. Cette différence est cohérente avec l'ajout des vérifications `is_granted()` dans la vue afin de faire correspondre l'interface aux règles d'autorisation définies par `TaskVoter`.
+
+Cette évolution ne remet pas en cause le constat global : la mesure finale de 73 ms reste nettement inférieure aux 212 ms observés sur la version originale.
 
 Ces résultats doivent néanmoins être considérés dans le contexte d'un environnement Docker de développement avec le Web Profiler activé. Ils ne constituent donc pas un benchmark de production.
 
